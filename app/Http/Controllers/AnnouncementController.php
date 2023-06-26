@@ -12,7 +12,7 @@ class AnnouncementController extends Controller
      */
     public function index()
     {
-        //
+        return view('announcements.index');
     }
 
     /**
@@ -20,7 +20,7 @@ class AnnouncementController extends Controller
      */
     public function create()
     {
-        //
+        return view('announcements.create');
     }
 
     /**
@@ -28,7 +28,11 @@ class AnnouncementController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated_announcement = $request->validate([
+            'message'=>'required|string|max:255'
+        ]);
+        $request->user()->announcements()->create($validated_announcement);
+        //todo: set create policy here.
     }
 
     /**
