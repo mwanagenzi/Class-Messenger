@@ -36,6 +36,7 @@ class AnnouncementController extends Controller
         ]);
         $request->user()->announcements()->create($validated_announcement);
         //todo: set create policy here.
+        return redirect(secure_url(route('announcements.index')));
     }
 
     /**
@@ -72,6 +73,8 @@ class AnnouncementController extends Controller
      */
     public function destroy(Announcement $announcement)
     {
-        //
+        //todo: include policy
+        $announcement->delete();
+        return redirect(secure_url(route('announcements.index')));
     }
 }
