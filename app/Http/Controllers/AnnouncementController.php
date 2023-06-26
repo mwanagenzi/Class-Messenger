@@ -12,7 +12,10 @@ class AnnouncementController extends Controller
      */
     public function index()
     {
-        return view('announcements.index');
+        $announcements = Announcement::with('user')->latest()->get();
+        return view('announcements.index',
+            ['announcements' => $announcements]
+        );
     }
 
     /**
@@ -29,7 +32,7 @@ class AnnouncementController extends Controller
     public function store(Request $request)
     {
         $validated_announcement = $request->validate([
-            'message'=>'required|string|max:255'
+            'message' => 'required|string|max:255'
         ]);
         $request->user()->announcements()->create($validated_announcement);
         //todo: set create policy here.
