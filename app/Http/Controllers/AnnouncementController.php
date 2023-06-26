@@ -51,7 +51,7 @@ class AnnouncementController extends Controller
      */
     public function edit(Announcement $announcement)
     {
-        //
+        return view('announcements.edit', ['announcement' => $announcement]);
     }
 
     /**
@@ -59,7 +59,12 @@ class AnnouncementController extends Controller
      */
     public function update(Request $request, Announcement $announcement)
     {
-        //
+        //todo: include update policy
+        $validated_message = $request->validate([
+            'message' => 'required|string|max:255'
+        ]);
+        $announcement->update($validated_message);
+        return redirect(secure_url(route('announcements.index')));
     }
 
     /**
