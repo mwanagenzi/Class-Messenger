@@ -60,7 +60,7 @@ class AnnouncementController extends Controller
      */
     public function update(Request $request, Announcement $announcement)
     {
-        //todo: include update policy
+        $this->authorize('update', $announcement);
         $validated_message = $request->validate([
             'message' => 'required|string|max:255'
         ]);
@@ -73,7 +73,7 @@ class AnnouncementController extends Controller
      */
     public function destroy(Announcement $announcement)
     {
-        //todo: include policy
+        $this->authorize('delete', $announcement);
         $announcement->delete();
         return redirect(secure_url(route('announcements.index')));
     }
